@@ -1,0 +1,84 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Q1: Get 2 integers from the keyboard and print the largest one
+        Console.WriteLine("Q1:");
+        int num1 = GetIntegerInput("Enter the first integer: ");
+        int num2 = GetIntegerInput("Enter the second integer: ");
+        int maxQ1 = FindMax(num1, num2);
+        Console.WriteLine($"The largest number is: {maxQ1}\n");
+
+        // Q2: Get 4 integers from the keyboard and print the largest one
+        Console.WriteLine("Q2:");
+        int num3 = GetIntegerInput("Enter the third integer: ");
+        int num4 = GetIntegerInput("Enter the fourth integer: ");
+        int maxQ2 = FindMax(FindMax(num1, num2), FindMax(num3, num4));
+        Console.WriteLine($"The largest number is: {maxQ2}\n");
+
+        // Q3: Implementing account-creating process
+        Console.WriteLine("Q3:");
+        createAccount();
+    }
+
+    // Q1 method: Returns the largest of two integers
+    static int FindMax(int a, int b)
+    {
+        return (a > b) ? a : b;
+    }
+
+    // Helper method to get integer input from the user
+    static int GetIntegerInput(string message)
+    {
+        Console.Write(message);
+        while (!int.TryParse(Console.ReadLine(), out int result))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid integer.");
+            Console.Write(message);
+        }
+        return result;
+    }
+
+    // Q3 methods
+    static bool CheckAge(int birthYear)
+    {
+        // Assuming current_year is the current year (you may need to adjust this)
+        int currentYear = DateTime.Now.Year;
+        int age = currentYear - birthYear;
+        return age >= 18;
+    }
+
+    static void createAccount()
+    {
+        Console.Write("Enter username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter password: ");
+        string password1 = Console.ReadLine();
+
+        Console.Write("Enter password again: ");
+        string password2 = Console.ReadLine();
+
+        Console.Write("Enter birth year: ");
+        int birthYear = GetIntegerInput("");
+
+        if (CheckAge(birthYear))
+        {
+            if (password1 == password2)
+            {
+                Console.WriteLine("Account is created successfully");
+            }
+            else
+            {
+                Console.WriteLine("Wrong password");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Could not create an account");
+        }
+    }
+}
+    
