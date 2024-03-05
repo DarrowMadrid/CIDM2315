@@ -1,0 +1,57 @@
+using System;
+
+public class Customer
+{
+    private int customerId;
+    public string customerName;
+    public int customerAge;
+
+    public Customer(int id, string name, int age)
+    {
+        customerId = id;
+        customerName = name;
+        customerAge = age;
+    }
+
+    public void ChangeId(int newId)
+    {
+        customerId = newId;
+    }
+
+    public void PrintCustomerInfo()
+    {
+        Console.WriteLine($"Customer ID: {customerId}, Name: {customerName}, Age: {customerAge}");
+    }
+
+    public void CompareAge(Customer otherCustomer)
+    {
+        string olderCustomerName = (this.customerAge > otherCustomer.customerAge) ? this.customerName : otherCustomer.customerName;
+
+        Console.WriteLine($"The older customer between {this.customerName} and {otherCustomer.customerName} is: {olderCustomerName}");
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        Customer customer1 = new Customer(110, "Alice", 28);
+        Customer customer2 = new Customer(111, "Bob", 30);
+
+        Console.WriteLine("Initial Customer Information:");
+        customer1.PrintCustomerInfo();
+        customer2.PrintCustomerInfo();
+
+        // Update customer IDs
+        customer1.ChangeId(220);
+        customer2.ChangeId(221);
+
+        Console.WriteLine("\nCustomer Information after ID Update:");
+        customer1.PrintCustomerInfo();
+        customer2.PrintCustomerInfo();
+
+        // Compare ages and print the older customer's name
+        Console.WriteLine("\nComparing Ages:");
+        customer1.CompareAge(customer2);
+    }
+}
