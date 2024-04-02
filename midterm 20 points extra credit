@@ -1,0 +1,119 @@
+using System;
+
+public class HumanPlayer
+{
+    private int points;
+
+    public HumanPlayer(int initial)
+    {
+        points = initial;
+    }
+
+    public int GetPoints()
+    {
+        return points;
+    }
+
+    public void WinRound()
+    {
+        points += 5;
+    }
+
+    public void LoseRound()
+    {
+        points -= 5;
+    }
+
+    public string HumanDecision()
+    {
+        Console.WriteLine("Enter your decision (Rock, Paper, or Scissors): ");
+        string decision = Console.ReadLine().ToLower();
+        if (decision != "rock" && decision != "paper" && decision != "scissors")
+        {
+            Console.WriteLine("Invalid input. Please enter Rock, Paper, or Scissors.");
+            return HumanDecision();
+        }
+        return decision;
+    }
+}
+
+public class ComputerPlayer
+{
+    private readonly Random random = new Random();
+
+    public string ComputerDecision()
+    {
+        int decision = random.Next(1, 4);
+        switch (decision)
+        {
+            case 1:
+                return "Rock";
+            case 2:
+                return "Paper";
+            case 3:
+                return "Scissors";
+            default:
+                return "Error";
+        }
+    }
+}
+
+public class RockPaperScissors
+{
+    public static void Main(string[] args)
+    {
+        HumanPlayer humanPlayer = new HumanPlayer(5); // Human player starts with 5 points
+        ComputerPlayer computerPlayer = new ComputerPlayer();
+
+        while (true)
+        {
+            Console.WriteLine($"Your points: {humanPlayer.GetPoints()}");
+
+            string humanDecision = humanPlayer.HumanDecision();
+            string computerDecision = computerPlayer.ComputerDecision();
+
+            Console.WriteLine($"Computer selects: {computerDecision}");
+
+            int result = DecideWinner(humanDecision, computerDecision);
+
+            if (result == 1)
+            {
+                Console.WriteLine("You win this round!");
+                humanPlayer.WinRound();
+            }
+            else if (result == -1)
+            {
+                Console.WriteLine("You lose this round!");
+                humanPlayer.LoseRound();
+            }
+            else
+            {
+                Console.WriteLine("It's a tie!");
+            }
+
+            if (humanPlayer.GetPoints() == 0)
+            {
+                Console.WriteLine("Game over! You have 0 points.");
+                break;
+            }
+
+            Console.WriteLine("Do you want to play another round? (yes/no)");
+            string playAgain = Console.ReadLine().ToLower();
+
+            if (playAgain != "yes")
+                break;
+        }
+    }
+
+    private static int DecideWinner(string humanDecision, string computerDecision)
+    {
+        if (humanDecision == computerDecision)
+            return 0;
+        else if ((humanDecision == "Rock" && computerDecision == "Scissors") ||
+                 (humanDecision == "Paper" && computerDecision == "Rock") ||
+                 (humanDecision == "Scissors" && computerDecision == "Paper"))
+            return 1;
+        else
+            return -1;
+    }
+}
